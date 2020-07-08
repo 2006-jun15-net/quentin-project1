@@ -7,8 +7,8 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Customer: @Html.DisplayFor(model => model.Name)</h4>
-    <h4>Default Location: @Html.DisplayFor(model => model.Location)</h4>
+    <h4>Customer: @Model.FirstName @Model.LastName</h4>
+    <h4>Default Location: @Html.DisplayFor(model => model.LocationName)</h4>
     <hr />
     <h4>@Html.DisplayNameFor(model => model.OrderHistory)</h4>
     @foreach (int i in Model.OrderHistory)

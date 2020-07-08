@@ -8,10 +8,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model[0].Name)
+                Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model[0].Location)
+                @Html.DisplayNameFor(model => model[0].LocationName)
             </th>
         </tr>
     </thead>
@@ -20,10 +20,10 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @item.FirstName @item.LastName
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Location)
+                    @Html.DisplayFor(modelItem => item.LocationName)
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

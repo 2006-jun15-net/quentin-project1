@@ -8,10 +8,13 @@ namespace App.Web.Models.ViewModels
 {
     public class CustomerVM
     {
-        [DisplayName("Name")]
-        public String Name { get; set; }
+        [DisplayName("First Name")]
+        public String FirstName { get; set; }
+        [DisplayName("Last Name")]
+        public String LastName { get; set; }
         [DisplayName("Location")]
-        public string Location { get; set; }
+        public string LocationName { get; set; }
+        public int LocationId { get; set; }
         [DisplayName("Order History")]
         public List<int> OrderHistory { get; set; }
         public int Id { get; set; }

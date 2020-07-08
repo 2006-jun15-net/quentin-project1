@@ -73,12 +73,22 @@ namespace App.Web
         public static CustomerVM Map(Customer c)
         {
             var _ = new CustomerVM();
-            _.Name = c.FirstName + " " + c.LastName;
+            _.FirstName = c.FirstName; 
+            _.LastName  = c.LastName;
             _.OrderHistory = new List<int>();
+            _.Id = c.Id;
             foreach (var i in c.Order)
             {
                 _.OrderHistory.Add(i.OrderId);
             }
+            return _;
+        }
+        public static Customer Map(CustomerVM c)
+        {
+            var _ = new Customer();
+            _.FirstName = c.FirstName;
+            _.LastName = c.LastName;
+            _.DefaultLocationId = c.LocationId;
             return _;
         }
         public static List<CustomerVM> Map(List<Customer> c)
@@ -87,7 +97,8 @@ namespace App.Web
             foreach (var i in c)
             {
                 var C = new CustomerVM();
-                C.Name = i.FirstName + " " + i.LastName;
+                C.FirstName = i.FirstName; 
+                C.LastName = i.LastName;
                 C.Id = i.Id;
                 _.Add(C);
             }
