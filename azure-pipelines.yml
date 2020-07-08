@@ -9,8 +9,7 @@ steps:
     organization: '2006-jun15-net'
     scannerMode: 'MSBuild'
     projectKey: 'quentin-project1'
-  inputs:
-    pollingTimeoutSec: '300'
+
 - task: DotNetCoreCLI@2
   inputs:
     command: publish
@@ -21,6 +20,8 @@ steps:
   
 - task: SonarCloudAnalyze@1
 - task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
 - task: AzureRmWebAppDeployment@4
   inputs:
     ConnectionType: 'AzureRM'
