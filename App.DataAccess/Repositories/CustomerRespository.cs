@@ -1,10 +1,37 @@
-﻿using System;
+﻿using App.DataAccess.Entities;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace App.DataAccess.Repositories
 {
-    class Class1
+    public class CustomerRepository : ICustomerRepo
     {
+        private DbContext _context;
+        public Customer Add(Customer c)
+        {
+            var C = _context.Set<Entities.Customer>();
+           C.Add(c);
+           _context.SaveChanges();
+            return c;
+        }
+        public Customer GetById(int id)
+        {
+            return _context.Set<Entities.Customer>()
+            .Where(x => x.Id == id)
+            .Include(x => x.Order)
+            .ThenInclude(o => o.Product)
+            .FirstOrDefault();
+        }
+        public List<Customer> Search(string searchstring)
+        {
+            return _context.Set<Entities.Customer>().Where(x => (x.FirstName.ToLower() + x.LastName.ToLower()).Contains(searchstring.ToLower())).ToList();
+        }
+        public CustomerRepository(MyDBContext context)
+        {
+            this._context = context;
+        }
     }
 }

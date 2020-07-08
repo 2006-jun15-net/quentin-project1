@@ -12,7 +12,11 @@ namespace App.DataAccess.Repositories
         private DbContext _context;
         public List<Order> GetById(int orderId)
         {
-            return _context.Set<Entities.Order>().Where(x => x.OrderId == orderId).ToList();
+            return _context.Set<Entities.Order>().Where(x => x.OrderId == orderId)
+                .Include(o => o.Customer)
+                .Include(o => o.Location)
+                .Include(o => o.Product)
+                .ToList();
         }
         public virtual int GetNewOrderId()
         {
@@ -54,7 +58,14 @@ namespace App.DataAccess.Repositories
         {
             this._context = context;
         }
+        public List<Order> Search(Customer c)
+        {
+            return _context.Set<Entities.Order>().Where(x => x.CustomerId == c.Id).ToList();
+        }
+        public List<Order> Search(Location l)
+        {
+            return _context.Set<Entities.Order>().Where(x => x.LocationId == l.Id).ToList();
+        }
     }
         
-    }
 }

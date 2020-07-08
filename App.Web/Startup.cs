@@ -29,6 +29,9 @@ namespace App.Web
             services.AddDbContext<MyDBContext>(options =>
             options.UseSqlServer(Configuration["SQL"]));
             services.AddScoped<IOrderRepo, OrderRepository>();
+            services.AddScoped<ICustomerRepo, CustomerRepository>();
+            services.AddScoped<IInventoryRepo, InventoryRepository>();
+            services.AddScoped<ILocationRepo, LocationRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

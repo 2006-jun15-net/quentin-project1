@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
@@ -11,9 +12,9 @@ namespace App.DataAccess
 {
     public class GenericRepository<T>  where T : class
     {
-        private static readonly DbContextOptions<MyDBContext> Options = new DbContextOptionsBuilder<MyDBContext>()
-            .UseSqlServer(App.DataAccess.SQLConfig.ConnectionString)
-            .Options;
+        //private static readonly DbContextOptions<MyDBContext> Options = new DbContextOptionsBuilder<MyDBContext>()
+        //    .UseSqlServer(App.DataAccess.SQLConfig.ConnectionString)
+        //    .Options;
 
         private DbContext _context = null;
         private DbSet<T> table = null;
@@ -25,8 +26,8 @@ namespace App.DataAccess
         */
         public GenericRepository()
         {
-            this._context = new MyDBContext(Options);
-            table = _context.Set<T>();
+            //this._context = new MyDBContext(Options);
+            //table = _context.Set<T>();
         }
         /*
         <summary>

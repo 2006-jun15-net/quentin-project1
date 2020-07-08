@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h1>Search</h1>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="Customers-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Customers</a>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="Customers" role="tabpanel" aria-labelledby="home-tab">
+        <form asp-controller="Customers" asp-action="Search">
+            <div class="text-danger"></div>
+            <div class="form-group">
+                <input type="text" name="SearchString">
+                <input type="submit" value="Search" />
+            </div>
+        </form>
+    </div>
+</div>Cus
+
