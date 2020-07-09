@@ -13,8 +13,7 @@ steps:
         sonar.cs.opencover.reportsPaths=$(Agent.TempDirectory)/*/coverage.opencover.xml
 
 - script: dotnet build App.sln
-  displayName: 'dotnet build -o ./'
-  workingDirectory: $(solutionPath)
+  displayName: 'dotnet build -c Release-o ./'
 - task: DotNetCoreCLI@2
   displayName: dotnet test
   inputs:
