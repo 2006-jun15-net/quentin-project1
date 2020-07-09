@@ -12,8 +12,8 @@ steps:
         sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
         sonar.cs.opencover.reportsPaths=$(Agent.TempDirectory)/*/coverage.opencover.xml
 
-- script: dotnet build App.sln
-  displayName: 'dotnet build -c Release-o ./'
+- script: dotnet build App -c Release-o ./ .sln
+  displayName: 'dotnet build '
 - task: DotNetCoreCLI@2
   displayName: dotnet test
   inputs:
