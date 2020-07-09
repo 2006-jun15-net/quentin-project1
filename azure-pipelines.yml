@@ -26,11 +26,6 @@ steps:
     command: test 
     projects: 'App.sln'
     arguments: ' --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura,opencover'
-- task: PublishCodeCoverageResults@1
-  inputs:
-    codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '''$(Agent.TempDirectory)/*/coverage.cobertura.xml'''
-    failIfCoverageEmpty: true
 - task: SonarCloudAnalyze@1
 - task: DotNetCoreCLI@2
   inputs:
@@ -38,6 +33,11 @@ steps:
 - task: SonarCloudPublish@1
   inputs:
     pollingTimeoutSec: '300'
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '''$(Agent.TempDirectory)/*/coverage.cobertura.xml'''
+    failIfCoverageEmpty: true
 - task: DotNetCoreCLI@2
   inputs:
     command: publish
