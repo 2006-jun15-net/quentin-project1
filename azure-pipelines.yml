@@ -10,7 +10,7 @@ steps:
       
 - script: dotnet build App.sln
   displayName: 'dotnet build -o ./'
-  workingDirectory: $(sol)
+  workingDirectory: $(solutionPath)
 - task: SonarCloudAnalyze@1
 - task: SonarCloudPublish@1
   inputs:
