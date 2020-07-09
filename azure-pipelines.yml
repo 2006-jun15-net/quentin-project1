@@ -7,10 +7,28 @@ steps:
       organization: '2006-jun15-net'
       scannerMode: 'MSBuild'
       projectKey: '2006-jun15-net_quentin-project1'
-      
+      extraProperties: |
+        sonar.exclusions=**/lib/**
+        sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
+        sonar.cs.opencover.reportsPaths=$(Agent.TempDirectory)/*/coverage.opencover.xml
+
 - script: dotnet build App.sln
   displayName: 'dotnet build -o ./'
+- task: DotNetCoreCLI@2
+  displayName: dotnet test
+  inputs:
+    command: test
+    projects: '$(solutionPath)'
+    arguments: '-c Release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura,opencover'
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '''$(Agent.TempDirectory)/*/coverage.cobertura.xml'''
+    failIfCoverageEmpty: true
 - task: SonarCloudAnalyze@1
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test' 
 - task: SonarCloudPublish@1
   inputs:
     pollingTimeoutSec: '300'
