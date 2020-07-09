@@ -2,14 +2,7 @@ pool:
   vmImage: 'windows-latest'
 steps:
 - script: dotnet build App.sln
-  displayName: 'dotnet build'
-- task: SonarCloudPrepare@1
-  inputs:
-    SonarCloud: 'Sonar Cloud'
-    organization: '2006-jun15-net'
-    scannerMode: 'MSBuild'
-    projectKey: 'quentin-project1'
-
+  displayName: 'dotnet build -o ./'
 - task: DotNetCoreCLI@2
   inputs:
     command: publish
@@ -17,11 +10,6 @@ steps:
     projects: ./*.sln
     publishWebProjects: true
   displayName: 'dotnet publish'
-  
-- task: SonarCloudAnalyze@1
-- task: SonarCloudPublish@1
-  inputs:
-    pollingTimeoutSec: '300'
 - task: AzureRmWebAppDeployment@4
   inputs:
     ConnectionType: 'AzureRM'
@@ -32,3 +20,4 @@ steps:
     modifyOutputPath: true
     zipAfterPublish: true
   displayName: 'deploy'
+  
