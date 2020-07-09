@@ -2,12 +2,11 @@ pool:
   vmImage: 'windows-latest'
 steps:
 - task: NuGetCommand@2
-    inputs:
-      command: 'restore'
-    restoreSolution: 'source/SolutionFolder/Solution.sln'
-    feedsToUse: 'config'
-    nugetConfigPath: 'NuGet.Config'
-    restoreDirectory: '$(Build.SourcesDirectory)\source\SolutionFolder\packages'
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*.sln'
+    feedsToUse: 'select'
+    vstsFeed: 'd4952ac8-6496-4ada-a00e-5fc5f5d3c35d'
 - task: SonarCloudPrepare@1
   inputs:
       SonarCloud: 'Sonar Cloud'
