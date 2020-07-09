@@ -1,8 +1,19 @@
 pool:
   vmImage: 'windows-latest'
 steps:
+- task: SonarCloudPrepare@1
+  inputs:
+      SonarCloud: 'Sonar Cloud'
+      organization: '2006-jun15-net'
+      scannerMode: 'MSBuild'
+      projectKey: '2006-jun15-net_quentin-project1'
+      
 - script: dotnet build App.sln
-  displayName: 'dotnet build'
+  displayName: 'dotnet build -o ./'
+- task: SonarCloudAnalyze@1
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
 - task: DotNetCoreCLI@2
   inputs:
     command: publish
@@ -20,4 +31,3 @@ steps:
     modifyOutputPath: true
     zipAfterPublish: true
   displayName: 'deploy'
-  
