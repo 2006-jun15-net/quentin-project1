@@ -1,11 +1,11 @@
-﻿@model List<App.Web.Models.ViewModels.InventoryVM>
+﻿@model List<App.Web.Models.ViewModels.CartVM>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Cart";
 }
 
-<h1>Global Inventory</h1>
-
+<h1>Cart</h1>
+<hr />
 <table class="table">
     <thead>
         <tr>
@@ -13,13 +13,10 @@
                 @Html.DisplayNameFor(model => model[0].ProductName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model[0].Price)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model[0].Qty)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model[0].Location)
+                @Html.DisplayNameFor(model => model[0].LocationName)
             </th>
             <th></th>
         </tr>
@@ -28,31 +25,34 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
+                <td class="ProductName">
                     @Html.DisplayFor(modelItem => item.ProductName)
                 </td>
-                <td>
-                   $@Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
+                <td class="Qty">
                     @Html.DisplayFor(modelItem => item.Qty)
                 </td>
-                <td>
+                <td class="Location">
                     <a asp-controller="Locations"
                        asp-action="Details"
                        asp-route-id="@item.LocationId">
-                        @Html.DisplayFor(modelItem => item.Location)
+                        @Html.DisplayFor(modelItem => item.LocationName)
                     </a>
                 </td>
                 <td>
-                    <input type="number" min="0" max="@item.Qty" />
-                    <input class="AddToCart" type="submit" ProductId="@item.ProductId" LocationId="@item.LocationId" value="Add to Cart" />
+                    <input type="number" min="0" value="@item.Qty" />
+                    <input class="UpdateCart" type="submit" productid="@item.ProductId" locationid="@item.LocationId" value="Update Cart" />
                     <span class="cartInfo"></span>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+<div>
+    <h2>Please select your customer:</h2>
+    <select asp-items="@((List<SelectListItem>)ViewData["Customers"])">
+        <option value="">Pick one</option>
+    </select>
+</div>
 <script>
-    CartRegisterActions = ".AddToCart"
+    CartRegisterActions = ".UpdateCart"
 </script>

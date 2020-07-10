@@ -27,7 +27,8 @@ namespace App.DataAccess.Repositories
         }
         public List<Customer> Search(string searchstring)
         {
-            return _context.Set<Entities.Customer>().Where(x => (x.FirstName.ToLower() + x.LastName.ToLower()).Contains(searchstring.ToLower())).ToList();
+            if (searchstring == "") return _context.Set<Entities.Customer>().ToList();
+            else return _context.Set<Entities.Customer>().Where(x => (x.FirstName.ToLower() + x.LastName.ToLower()).Contains(searchstring.ToLower())).ToList();
         }
         public CustomerRepository(MyDBContext context)
         {

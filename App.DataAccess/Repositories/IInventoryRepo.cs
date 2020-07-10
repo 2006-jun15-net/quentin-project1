@@ -7,5 +7,6 @@ namespace App.DataAccess.Repositories
     public interface IInventoryRepo
     {
         List<Inventory> Get();
+        Inventory Find(int pid, int lid);
     }
 }

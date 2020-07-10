@@ -10,6 +10,7 @@ namespace App.Web.Models.ViewModels
     {
         [DisplayName("Product Name")]
         public string ProductName { get; set; }
+        public int ProductId { get; set; }
         public decimal Price { get; set; }
         [DisplayName("Stock")]
         public int Qty { get; set; }

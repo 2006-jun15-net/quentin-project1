@@ -15,6 +15,7 @@ namespace App.Web
             {
                 var _ = new InventoryVM();
                 _.ProductName = i.Product.Name;
+                _.ProductId = i.ProductId;
                 _.Price = i.Product.Price;
                 _.Qty = i.Qty;
                 _.Location = i.Location.Name;
@@ -62,6 +63,7 @@ namespace App.Web
                 var o = new InventoryVM()
                 {
                     ProductName = i.Product.Name,
+                    ProductId = i.ProductId,
                     Qty = i.Qty,
                     Price = i.Product.Price
                 };

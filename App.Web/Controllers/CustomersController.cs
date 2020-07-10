@@ -49,31 +49,5 @@ namespace App.Web
             }
             return BadRequest(ModelState);
         }
-        /*
-        // GET: Customers/Create
-        public IActionResult Create()
-        {
-            ViewData["DefaultLocationId"] = new SelectList(_context.Location, "Id", "Name");
-            return View();
-        }
-
-        // POST: Customers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,DefaultLocationId")] Customer customer)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(customer);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["DefaultLocationId"] = new SelectList(_context.Location, "Id", "Name", customer.DefaultLocationId);
-            return View(customer);
-        }
-        */
-        // GET: Customers/Edit/5
     }
 }

@@ -16,6 +16,14 @@ namespace App.DataAccess.Repositories
                 .Include(o => o.Location)
                 .ToList();
         }
+        public Inventory Find(int pid, int lid)
+        {
+            return _context.Set<Entities.Inventory>()
+                .Where(x => x.ProductId == pid && x.LocationId == lid)
+                .Include(o => o.Product)
+                .Include(o => o.Location)
+                .FirstOrDefault();
+        }
         public InventoryRepository(MyDBContext context)
         {
             this._context = context;
