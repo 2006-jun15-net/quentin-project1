@@ -8,8 +8,9 @@ namespace App.DataAccess.Repositories
     {
         List<Order> GetById(int orderId);
         void Create(Order o);
-        void Create(List<Order> o);
+        int Create(List<Order> o);
         List<Order> Search(Customer c);
         List<Order> Search(Location l);
+        bool ValidateQty(Order o);
     }
 }

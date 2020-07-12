@@ -106,5 +106,26 @@ namespace App.Web
             }
             return _;
         }
+        public static List<Order> Map(CheckoutVM c)
+        {
+            var CustomerId = c.CustomerId;
+            var _ = new List<Order>();
+            foreach (var i in c.Items)
+            {
+                var o = Map(i);
+                o.CustomerId = CustomerId; 
+                _.Add(o);
+            }
+            return _;
+        }
+        public static Order Map(CheckoutItemVM c)
+        {
+            return new Order()
+            {
+                ProductId = c.ProductId,
+                LocationId = c.LocationId,
+                Qty = c.Qty
+            };
+        }
     }
     }

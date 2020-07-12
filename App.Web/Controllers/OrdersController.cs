@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using App.DataAccess.Entities;
+﻿using App.DataAccess.Entities;
 using App.DataAccess.Repositories;
+using App.Web.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using App.DataAccess.Entities;
 namespace App.Web.Controllers
 {
     public class OrdersController : Controller
@@ -27,13 +25,32 @@ namespace App.Web.Controllers
         {
             var order = _repo.GetById(id);
             var vm = Mapper.Map(order);
-            
+
             if (order == null)
             {
                 return NotFound();
             }
 
             return View(vm);
+        }
+        public JsonResult Checkout([FromBody]CheckoutVM data)
+        {
+            var order = Mapper.Map(data);
+            var failedOrders = new List<Order>();
+            for(int i = 0; i < order.Count ; i++)  
+            {
+                if (_repo.ValidateQty(order[i]) != true) {
+                    failedOrders.Add(order[i]);
+                    order.RemoveAt(i);
+                   }
+            }
+            var oid = _repo.Create(order);
+            return Json(
+                new CheckoutConfirmationVM()
+                {
+                    OrderNumber = oid,
+                    FailedOrders = failedOrders
+                });
         }
     }
 }

@@ -26,6 +26,7 @@ namespace App.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddMvc().AddNewtonsoftJson();
             services.AddDbContext<MyDBContext>(options =>
             options.UseSqlServer(Configuration["SQL"]));
             services.AddScoped<IOrderRepo, OrderRepository>();
@@ -49,7 +50,6 @@ namespace App.Web
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
 
             app.UseAuthorization();

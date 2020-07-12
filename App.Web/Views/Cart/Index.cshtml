@@ -49,9 +49,11 @@
 </table>
 <div>
     <h2>Please select your customer:</h2>
-    <select asp-items="@((List<SelectListItem>)ViewData["Customers"])">
-        <option value="">Pick one</option>
+    <select class="CustomerName" asp-items="@((List<SelectListItem>)ViewData["Customers"])">
+        <option value=""></option>
     </select>
+    <button class="Checkout">Checkout</button>
+    <span class="CheckOutWarning"></span>
 </div>
 <script>
     CartRegisterActions = ".UpdateCart"

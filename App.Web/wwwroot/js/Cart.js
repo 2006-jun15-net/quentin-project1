@@ -35,7 +35,52 @@
                     }
                 }
                 this.Update();
-            }
+    }
+    this.Modal = (data) => {
+        let _ = `
+<div style="display:block; background: #0000007d;" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">New Order Created: <a href="/Orders/Details/${data.orderNumber}">${data.orderNumber}</h5>
+      </div>
+      <div class="modal-body">
+        <p>There are ${data.failedOrders.length} failed insertions:</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>`
+        document.body.insertAdjacentHTML('afterbegin', _);
+    }
+    this.Checkout = (element) => {
+        var CustomerId = document.querySelector('.CustomerName').value;
+        if (CustomerId == "") {
+            return document.querySelector('.CheckOutWarning').innerHTML="Please Select a valid customer before checking out"
+        }
+        const data = JSON.stringify({ CustomerId: CustomerId, Items: this.Cart });
+        console.log(data);
+
+        var d = fetch('/Orders/Checkout', {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: data,
+        })
+            .then(response => response.json())
+            .then(data => {
+                this.Modal(data)
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        this.Cart = [];
+        this.Update()
+    }
         this.CreateRemoveButton=(element)=> {
             let _ = document.createElement('button')
             _.innerText = "Remove From Cart"
@@ -52,6 +97,10 @@
         }
     if (CartRegisterActions) {
         document.querySelectorAll(CartRegisterActions).forEach(el => el.onclick = () => this.Actions[CartRegisterActions](el))
+        if (CartRegisterActions == ".UpdateCart") {
+            var _ = document.querySelector('.Checkout')
+            _.onclick = () => this.Checkout(_)
         }
     }
-    _cart = Cart()
+    }
+    _cart=Cart()

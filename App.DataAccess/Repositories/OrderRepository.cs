@@ -22,37 +22,43 @@ namespace App.DataAccess.Repositories
         {
             return _context.Set<Entities.Order>().Select(o => o.OrderId).Max();
         }
+        public bool ValidateQty(Order o)
+        {
+           return _context.Set<Entities.Inventory>()
+                .Count(x => x.ProductId == o.ProductId && x.LocationId == o.LocationId && x.Qty >= o.Qty)           
+                == 0 ?
+                false:
+                true;
+        }
         public void Create(Order o)
         {
-            o.Date = o.Date == null ? DateTime.Now : o.Date;
+            o.Date = o.Date == DateTime.MinValue ? DateTime.Now : o.Date;
             o.OrderId = o.OrderId == 0 ? GetNewOrderId() + 1 : o.OrderId;
-            var Inventory = _context.Set<Inventory>();
-                var I = Inventory
-                    .Where(x => x.ProductId == o.ProductId && x.Location.Id == o.Location.Id)
-                    .FirstOrDefault();
-                if (I == null)
+            var I = _context.Set<Entities.Inventory>().First(x => x.ProductId == o.ProductId && x.LocationId == o.LocationId);
+            if (I == null)
                 {
                     throw new InvalidOperationException($"LocationID:{o.Location.Id} is currently out of stock of ProductID:{o.ProductId}");
                 };
                 if (I.Qty >= o.Qty)
                 {
                     I.Qty -= o.Qty;
-                    Inventory.Update(I);
+                    _context.Update(I);
                     _context.Set<Order>().Add(o);
                     _context.SaveChanges();
                 }
                 else throw new ArgumentException($"Value is too great for current Location. Location Inventory on hand is:{I.Qty}");
         }
-        public void Create(List<Order> o)
+        public int Create(List<Order> o)
         {
             int OrderId = GetNewOrderId() + 1;
             DateTime d = DateTime.Now;
-            foreach(Order O in o)
-            {
-                O.OrderId = OrderId;
-                O.Date = d;
-                Create(O);
-            }
+                foreach (Order O in o)
+                {
+                    O.OrderId = OrderId;
+                    O.Date = d;
+                    Create(O);
+                }
+                return OrderId;
         }
         public OrderRepository(MyDBContext context)
         {
