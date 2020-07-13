@@ -9,7 +9,8 @@
         this.Update();
         this.AddToCart = (element) => {
             var input = element.previousElementSibling;
-            if (parseInt(input.value) <= input.max) {
+            let parsed = parseInt(input.value)
+            if (parsed <= input.max && parsed > 0) {
                 this.Cart.push({ "ProductId": element.getAttribute('productid'), "LocationId": element.getAttribute('locationid'), "Qty": input.value });
                 console.log(localStorage.getItem('Cart'))
                 this.Update();

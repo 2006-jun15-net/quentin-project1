@@ -5,14 +5,18 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using App.DataAccess.Entities;
+using Microsoft.Extensions.Logging;
+
 namespace App.Web.Controllers
 {
     public class OrdersController : Controller
     {
         private readonly IOrderRepo _repo;
-        public OrdersController(IOrderRepo repo)
+        private readonly ILogger<OrdersController> _logger;
+        public OrdersController(IOrderRepo repo, ILogger<OrdersController> logger)
         {
             _repo = repo;
+            _logger = logger;
         }
 
         // GET: Orders
@@ -28,9 +32,10 @@ namespace App.Web.Controllers
 
             if (order == null)
             {
+                _logger.LogWarning($"Invalid order number provided for id:{id}");
                 return NotFound();
             }
-
+            _logger.LogInformation($"Successfully found order: {id}");
             return View(vm);
         }
         public JsonResult Checkout([FromBody]CheckoutVM data)
@@ -45,6 +50,7 @@ namespace App.Web.Controllers
                    }
             }
             var oid = _repo.Create(order);
+            _logger.LogInformation($"Successfully created order: {oid}");
             return Json(
                 new CheckoutConfirmationVM()
                 {

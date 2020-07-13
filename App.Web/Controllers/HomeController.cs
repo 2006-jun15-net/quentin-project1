@@ -23,11 +23,13 @@ namespace App.Web.Controllers
 
         public IActionResult Index()
         {
+            _logger.LogInformation("Home page visited");
             return View();
         }
 
         public IActionResult Search()
         {
+            _logger.LogInformation("Search page visited");
             return View();
         }
         public IActionResult Add()
@@ -38,12 +40,13 @@ namespace App.Web.Controllers
             Value = n.Id.ToString(),
             Text = n.Name.ToString()
             }).ToList();
-
+            _logger.LogInformation("Add page visited");
             return View();
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
+            _logger.LogWarning("Error page visited");
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }

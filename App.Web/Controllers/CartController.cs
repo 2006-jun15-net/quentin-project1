@@ -8,6 +8,7 @@ using App.Web.Models.ViewModels;
 using Newtonsoft.Json;
 using App.DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 
 namespace App.Web.Controllers
 {
@@ -16,10 +17,12 @@ namespace App.Web.Controllers
         // GET: Cart
         private readonly IInventoryRepo _Irepo;
         private readonly ICustomerRepo _Crepo;
-        public CartController(IInventoryRepo irepo, ICustomerRepo crepo)
+        private readonly ILogger<CartController> _logger;
+        public CartController(IInventoryRepo irepo, ICustomerRepo crepo, ILogger<CartController> logger)
         {
             _Irepo = irepo;
             _Crepo = crepo;
+            _logger = logger;
         }
         public ActionResult Index(string c)
         {
@@ -36,6 +39,7 @@ namespace App.Web.Controllers
                 Value = n.Id.ToString(),
                 Text = n.FirstName+" "+n.LastName
             }).ToList();
+            _logger.LogInformation("Getting Cart {Cart}", c);
             return View(CartItems);
         }
     }

@@ -6,16 +6,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using App.DataAccess.Repositories;
+using Microsoft.Extensions.Logging;
 
 namespace App.Web.Controllers
 {
     public class InventoriesController : Controller
     {
         private readonly IInventoryRepo _repo;
-
-        public InventoriesController(IInventoryRepo repo)
+        private readonly ILogger<InventoriesController> _logger;
+        public InventoriesController(IInventoryRepo repo, ILogger<InventoriesController> logger)
         {
             _repo = repo;
+            _logger = logger;
         }
 
         // GET: Inventories
@@ -23,6 +25,7 @@ namespace App.Web.Controllers
         {
             var data =_repo.Get();
             var formatted = Mapper.Map(data);
+            _logger.LogInformation("Displaying inventories");
             return View(formatted);
         }
     }
