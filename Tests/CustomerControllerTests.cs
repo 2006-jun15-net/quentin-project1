@@ -25,7 +25,12 @@ namespace Tests
             {
                 FirstName = "Bob",
                 LastName = "Jones",
-                DefaultLocationId = 2
+                DefaultLocationId = 2,
+                DefaultLocation = new Location()
+                {
+                    Name="test",
+                    Id=2
+                }
             });
             var controller = new CustomersController(Crepo.Object, Logger.Object);
             var result = (ViewResult)await controller.Details(1);
@@ -63,7 +68,12 @@ namespace Tests
             Customer C = new Customer() {
                 FirstName = "Test",
                 LastName = "test",
-                DefaultLocationId=2
+                DefaultLocationId = 2,
+                DefaultLocation = new Location()
+                {
+                    Name = "test",
+                    Id = 2
+                }
             };
             Crepo.Setup(repo => repo.Add(It.IsAny<Customer>()))
             .Returns(
@@ -73,7 +83,12 @@ namespace Tests
                     FirstName = "Bob",
                     LastName = "Jones",
                     DefaultLocationId = 2,
-                    Order = new List<Order>()
+                    Order = new List<Order>(),
+                    DefaultLocation = new Location()
+                    {
+                        Name = "test",
+                        Id = 2
+                    }
                 }
                 ) ;
             var controller = new CustomersController(Crepo.Object, Logger.Object);

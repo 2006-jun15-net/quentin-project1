@@ -12,7 +12,9 @@ namespace Tests
         [Fact]
         public void CustomerEntityToVMConversionsTest()
         {
-            var a = new Customer();
+            var a = new Customer() { 
+            DefaultLocation=new Location()
+            };
             var e = Mapper.Map(a);
             Assert.IsType<CustomerVM>(e);
         }
