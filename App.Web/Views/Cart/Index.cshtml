@@ -6,7 +6,7 @@
 
 <h1>Cart</h1>
 <hr />
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -18,35 +18,46 @@
             <th>
                 @Html.DisplayNameFor(model => model[0].LocationName)
             </th>
+            <th> @Html.DisplayNameFor(model => model[0].Price)</th>
             <th></th>
+            <th> @Html.DisplayNameFor(model => model[0].Total)</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td class="ProductName">
-                    @Html.DisplayFor(modelItem => item.ProductName)
-                </td>
-                <td class="Qty">
-                    @Html.DisplayFor(modelItem => item.Qty)
-                </td>
-                <td class="Location">
-                    <a asp-controller="Locations"
-                       asp-action="Details"
-                       asp-route-id="@item.LocationId">
-                        @Html.DisplayFor(modelItem => item.LocationName)
-                    </a>
-                </td>
-                <td>
-                    <input type="number" min="0" value="@item.Qty" />
-                    <input class="UpdateCart" type="submit" productid="@item.ProductId" locationid="@item.LocationId" value="Update Cart" />
-                    <span class="cartInfo"></span>
-                </td>
-            </tr>
+            string style = item.Qty == 0 ? "table-danger" : null;
+        <tr class="@style">
+            <td class="ProductName">
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td class="Qty">
+                @Html.DisplayFor(modelItem => item.Qty)
+            </td>
+            <td class="Location">
+                <a asp-controller="Locations"
+                   asp-action="Details"
+                   asp-route-id="@item.LocationId">
+                    @Html.DisplayFor(modelItem => item.LocationName)
+                </a>
+            </td>
+            <td class="Price">
+               @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                <input type="number" min="0" max="@item.Stock" value="@item.Qty" />
+                <input class="UpdateCart" type="submit" productid="@item.ProductId" locationid="@item.LocationId" value="Update Cart" />
+                <span class="cartInfo"></span>
+            </td>
+            <td class="Total">
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+        </tr>
         }
     </tbody>
 </table>
+<hr/>
+<h1 >Order Total: <span id="OrderTotal">@string.Format("{0:C}", @ViewData["OrderTotal"])</span></h1>
 <div>
     <h2>Please select your customer:</h2>
     <select class="CustomerName" asp-items="@((List<SelectListItem>)ViewData["Customers"])">

@@ -5,15 +5,15 @@
 }
 
 <h1>@Model.Name</h1>
-<table class="table">
+<table class="table" summary="Product Inventory results from location">
     <thead>
         <tr>
-            <th>
+            <th scope="column">
                 @Html.DisplayNameFor(model => model.Inventory[0].ProductName)
             </th>
-            <th>
+            <th scope="column">
                 @Html.DisplayNameFor(model => model.Inventory[0].Price)
-            </th>
+            </th scope="column">
             <th>
                 @Html.DisplayNameFor(model => model.Inventory[0].Qty)
             </th>
@@ -22,30 +22,39 @@
     <tbody>
         @foreach (var item in Model.Inventory)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProductName)
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+               $@Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Qty)
+            </td>
+            @if (item.Qty > 0)
+            {
+                <td class="tableInput">
+                    <input type="number" min="0" max="@item.Qty" />
+                    <button class="AddToCart btn-primary" ProductId="@item.ProductId" LocationId="@item.LocationId">Add to Cart</button>
+                    <span class="cartInfo"></span>
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Qty)
-                </td>
-            </tr>
+            }
+        </tr>
         }
     </tbody>
 </table>
 <h1>Order History</h1>
-<table class="table">
+<table class="table" summary="Product Inventory results from location">
     <thead>
         <tr>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.Orders[0].Id)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.Orders[0].CustomerName)
             </th>
+
         </tr>
     </thead>
     <tbody>
@@ -66,7 +75,11 @@
                         @Html.DisplayFor(modelItem => item.CustomerName)
                     </a>
                 </td>
+
             </tr>
         }
     </tbody>
 </table>
+<script>
+    CartRegisterActions = ".AddToCart"
+</script>

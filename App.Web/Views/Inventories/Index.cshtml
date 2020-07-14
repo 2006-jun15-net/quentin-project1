@@ -6,49 +6,54 @@
 
 <h1>Global Inventory</h1>
 
-<table class="table">
+<table class="table table-bordered table-striped" summary="Product Inventory results for sale">
     <thead>
         <tr>
-            <th>
+            <th scope="column">
                 @Html.DisplayNameFor(model => model[0].ProductName)
             </th>
-            <th>
+            <th scope="column">
                 @Html.DisplayNameFor(model => model[0].Price)
             </th>
-            <th>
+            <th scope="column">
                 @Html.DisplayNameFor(model => model[0].Qty)
             </th>
-            <th>
+            <th scope="column">
                 @Html.DisplayNameFor(model => model[0].Location)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProductName)
-                </td>
-                <td>
-                   $@Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Qty)
-                </td>
-                <td>
-                    <a asp-controller="Locations"
-                       asp-action="Details"
-                       asp-route-id="@item.LocationId">
-                        @Html.DisplayFor(modelItem => item.Location)
-                    </a>
-                </td>
-                <td>
-                    <input type="number" min="0" max="@item.Qty" />
-                    <input class="AddToCart" type="submit" ProductId="@item.ProductId" LocationId="@item.LocationId" value="Add to Cart" />
-                    <span class="cartInfo"></span>
-                </td>
+        string style = @item.Qty == 0  ? "table-danger" : null;
+        <tr class="@style">
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                $@Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Qty)
+            </td>
+            <td>
+                <a asp-controller="Locations"
+                   asp-action="Details"
+                   asp-route-id="@item.LocationId">
+                    @Html.DisplayFor(modelItem => item.Location)
+                </a>
+            </td>
+
+            @if (item.Qty > 0)
+            {
+        <td class="tableInput">
+            <input type="number" min="0" max="@item.Qty" />
+            <button class="AddToCart btn-primary" ProductId="@item.ProductId" LocationId="@item.LocationId">Add to Cart</button>
+            <span class="cartInfo"></span>
+        </td>
+                    }
+                
             </tr>
         }
     </tbody>

@@ -27,12 +27,20 @@ namespace App.Web.Controllers
         public ActionResult Index(string c)
         {
         var CartItems = JsonConvert.DeserializeObject<List<CartVM>>(c);
+            decimal total = 0.0M;
             foreach(var i in CartItems)
             {
                var l = _Irepo.Find(i.ProductId, i.LocationId);
                 i.ProductName = l.Product.Name;
                 i.LocationName = l.Location.Name;
+                i.Price = l.Product.Price;
+                if (i.Qty > l.Qty) {
+                    i.Qty = l.Qty;
+                }
+                i.Stock = l.Qty;
+                total += i.Total;
             }
+            ViewData["OrderTotal"] = total;
             ViewData["Customers"] = _Crepo.Search("")
             .Select(n => new SelectListItem
             {

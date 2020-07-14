@@ -65,7 +65,8 @@ namespace App.Web
                     ProductName = i.Product.Name,
                     ProductId = i.ProductId,
                     Qty = i.Qty,
-                    Price = i.Product.Price
+                    Price = i.Product.Price,
+                    LocationId = i.LocationId
                 };
                 
                 _.Inventory.Add(o);
