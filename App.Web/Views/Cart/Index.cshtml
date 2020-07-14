@@ -6,21 +6,21 @@
 
 <h1>Cart</h1>
 <hr />
-<table class="table table-striped">
+<table class="table table-striped" summary="Checkout order summary">
     <thead>
         <tr>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model[0].ProductName)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model[0].Qty)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model[0].LocationName)
-            </th>
-            <th> @Html.DisplayNameFor(model => model[0].Price)</th>
-            <th></th>
-            <th> @Html.DisplayNameFor(model => model[0].Total)</th>
+            </th scope="col">
+            <th scope="col"> @Html.DisplayNameFor(model => model[0].Price)</th>
+            <th scope="col"></th>
+            <th scope="col"> @Html.DisplayNameFor(model => model[0].Total)</th>
         </tr>
     </thead>
     <tbody>

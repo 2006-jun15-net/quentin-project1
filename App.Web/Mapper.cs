@@ -80,9 +80,13 @@ namespace App.Web
             _.LastName  = c.LastName;
             _.OrderHistory = new List<int>();
             _.Id = c.Id;
+            _.LocationName = c.DefaultLocation.Name;
             foreach (var i in c.Order)
             {
-                _.OrderHistory.Add(i.OrderId);
+                if (_.OrderHistory.IndexOf(i.OrderId) == -1)
+                {
+                    _.OrderHistory.Add(i.OrderId);
+                }
             }
             return _;
         }
@@ -103,6 +107,7 @@ namespace App.Web
                 C.FirstName = i.FirstName; 
                 C.LastName = i.LastName;
                 C.Id = i.Id;
+                C.LocationName = i.DefaultLocation == null ? "none" : i.DefaultLocation.Name;
                 _.Add(C);
             }
             return _;

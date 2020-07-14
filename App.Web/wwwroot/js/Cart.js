@@ -88,20 +88,20 @@
         document.body.insertAdjacentHTML('afterbegin', _);
     }
     this.Checkout = (element) => {
+        element.disabled = true;
         var CustomerId = document.querySelector('.CustomerName').value;
         if (CustomerId == "") {
             return document.querySelector('.CheckOutWarning').innerHTML="Please Select a valid customer before checking out"
         }
         const data = JSON.stringify({ CustomerId: CustomerId, Items: this.Cart });
         console.log(data);
-
         var d = fetch('/Orders/Checkout', {
             method: 'POST', // or 'PUT'
             headers: {
                 'Content-Type': 'application/json',
             },
             body: data,
-        })
+            })
             .then(response => response.json())
             .then(data => {
                 this.Modal(data)
